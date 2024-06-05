@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"time"
+)
 
 /**
 Process:
@@ -18,6 +20,9 @@ Parallelism:
 The previous notion of concurrency can be mixed up with parallelism. “Concurrency is not parallelism” (Rob Pike) 2. Parallelism refer to tasks that are executed simultaneously (at the same time). A concurrent program might run tasks in parallel.
 
 **/
+
 func main() {
-	fmt.Println("hello")
+	Base()
+	WaitGroup()
+	time.Sleep(1 * time.Second)
 }
