@@ -1,13 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
 func isValidChar(r rune) bool {
-	if int(r) >= 97 && int(r) <= 122 {
-		fmt.Println(string(r))
+	if (int(r) >= 97 && int(r) <= 122) || (int(r) >= 48 && int(r) <= 57) {
 		return true
 	}
 	return false
@@ -18,11 +16,7 @@ func isPalindrome(s string) bool {
 	indexEnd := len - 1
 	indexStart := 0
 	s = strings.ToLower(s)
-	for indexStart < len {
-		if indexStart > indexEnd {
-			return false
-		}
-
+	for indexStart <= indexEnd {
 		if !isValidChar(rune(s[indexStart])) {
 			indexStart++
 			continue
@@ -36,6 +30,7 @@ func isPalindrome(s string) bool {
 		if strings.Compare(string(s[indexStart]), string(s[indexEnd])) != 0 {
 			return false
 		}
+
 		indexStart++
 		indexEnd--
 
