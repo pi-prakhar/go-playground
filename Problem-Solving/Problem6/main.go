@@ -1,5 +1,14 @@
 package main
 
+/**
+PROBLEM:
+Leetcode -> Best Time to Buy and Sell Stock -> easy
+
+TAGS:
+arrays, two pointer, sliding window
+
+**/
+
 func maxProfit(prices []int) int {
 	buy := prices[0]
 	profit := 0
