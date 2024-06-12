@@ -25,17 +25,23 @@ type Order struct {
 	list *[]string
 }
 
+var list = make([]string, len(philosophers))
+var order = Order{
+	mu:   &sync.Mutex{},
+	list: &list,
+}
+
 var forks = make(map[int]*sync.Mutex)
 var hunger = 1
 var eatTime = 0 * time.Second
 
 func main() {
 	//create order list
-	list := make([]string, len(philosophers))
-	order := Order{
-		mu:   &sync.Mutex{},
-		list: &list,
-	}
+	// list := make([]string, len(philosophers))
+	// order := Order{
+	// 	mu:   &sync.Mutex{},
+	// 	list: &list,
+	// }
 	//create forks
 	for i := 0; i < len(philosophers); i++ {
 		forks[i] = &sync.Mutex{}
