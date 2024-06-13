@@ -1,5 +1,14 @@
 package main
 
+/**
+PROBLEM:
+Leetcode -> Reverse Linked List -> easy
+
+TAGS:
+linked list , recursion
+
+**/
+
 type ListNode struct {
 	Val  int
 	Next *ListNode
