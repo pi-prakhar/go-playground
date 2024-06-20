@@ -1,5 +1,12 @@
 package main
 
+/**
+Problem:
+leetcode -> Container With Most Water -> medium
+
+Tags:
+array, two pointer, math
+**/
 func maxArea(height []int) int {
 	maxArea := 0
 	start := 0
@@ -7,20 +14,20 @@ func maxArea(height []int) int {
 	for start < end {
 		heightStart := height[start]
 		heightEnd := height[end]
-		var minHeight int
+		var currArea int
 
 		if heightStart < heightEnd {
+			currArea = heightStart * (end - start)
 			start++
-			minHeight = heightStart
+
 		} else {
+			currArea = heightEnd * (end - start)
 			end--
-			minHeight = heightEnd
 		}
-		currArea := minHeight * (end - start)
+
 		if currArea > maxArea {
 			maxArea = currArea
 		}
 	}
 	return maxArea
-
 }
