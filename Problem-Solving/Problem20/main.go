@@ -1,40 +1,55 @@
 package main
 
-func findMin(nums []int) int {
-	l := len(nums)
-	left := 0
-	right := l - 1
-	mid := (left + right) / 2
-	gap := mid - left
+/**
+PROBLEM:
+leetcode -> Search in Rotated Sorted Array -> medium
 
-	for !((nums[left] <= nums[mid]) && (nums[mid] <= nums[right])) {
-		if (nums[mid] >= nums[left]) && (nums[left] >= nums[right]) {
-			left = right
-		} else {
-			left = mid
-		}
-		right = (left + l - 1) % l
-		mid = (left + gap) % l
-	}
-	return left
-}
+TAGS:
+array , binary search
+
+**/
 
 func search(nums []int, target int) int {
-	tl := len(nums)
-	left := findMin(nums)
-	l := tl
+	k := searchMin(nums)
+	return searchValue(nums, target, k)
+}
 
-	for l >= 0 {
-		mid := (left + (l / 2)) % tl
-		if nums[mid] == target {
-			return mid
-		} else if nums[mid] > target {
-			l = l / 2
+func searchMin(nums []int) int {
+	l := 0
+	h := len(nums) - 1
+	mid := 0
+	target := nums[l]
+	index := l
+
+	for l <= h {
+		mid = (l + h) / 2
+		if nums[mid] >= target {
+			l = mid + 1
 		} else {
-			left = (mid + 1) % tl
-			l = l / 2
+			target = nums[mid]
+			index = mid
+			h = mid - 1
 		}
+	}
+	return index
+}
 
+func searchValue(nums []int, target int, k int) int {
+	length := len(nums)
+	l := 0
+	h := length - 1
+
+	for l <= h {
+		mid := (l + h) / 2
+		resolvedMid := (mid + k) % length
+		if nums[resolvedMid] == target {
+			return resolvedMid
+		}
+		if nums[resolvedMid] > target {
+			h = mid - 1
+		} else {
+			l = mid + 1
+		}
 	}
 	return -1
 }
