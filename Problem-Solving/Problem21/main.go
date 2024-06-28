@@ -5,22 +5,25 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func copyLinkedList(head *ListNode) *ListNode {
+func copyLinkedList(head *ListNode) (*ListNode, int) {
 	if head == nil {
-		return nil
+		return nil, -1
 	}
+
 	newHead := &ListNode{Val: head.Val}
 	currentOriginal := head.Next
 	currentNew := newHead
+	count := 1
 
 	for currentOriginal != nil {
+		count++
 		newNode := &ListNode{Val: currentOriginal.Val}
 		currentNew.Next = newNode
 		currentNew = newNode
 		currentOriginal = currentOriginal.Next
 	}
 
-	return newHead
+	return newHead, count
 }
 func getReverseList(head *ListNode) *ListNode {
 	if head.Next == nil {
@@ -36,8 +39,8 @@ func getReverseList(head *ListNode) *ListNode {
 	return temp
 
 }
-func reorderList(head *ListNode) {
-	list := copyLinkedList(head)
+func reorderList(head *ListNode) *ListNode {
+	list, count := copyLinkedList(head)
 	reverseList := getReverseList(head)
 
 	temp := &ListNode{
@@ -45,13 +48,14 @@ func reorderList(head *ListNode) {
 	}
 	tempList := temp
 	list = list.Next
+	count--
 
 	alternate := true
-
-	for list != reverseList {
+	head = tempList
+	for count > 0 {
 		if alternate {
 			temp = &ListNode{
-				Val: list.Val, Next: nil,
+				Val: reverseList.Val, Next: nil,
 			}
 			tempList.Next = temp
 			reverseList = reverseList.Next
@@ -64,7 +68,9 @@ func reorderList(head *ListNode) {
 			list = list.Next
 			alternate = true
 		}
+		count--
+		tempList = tempList.Next
 	}
-
-	head = tempList
+	tempList = nil
+	return head
 }
