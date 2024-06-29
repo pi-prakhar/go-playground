@@ -5,72 +5,59 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func copyLinkedList(head *ListNode) (*ListNode, int) {
-	if head == nil {
-		return nil, -1
-	}
-
-	newHead := &ListNode{Val: head.Val}
-	currentOriginal := head.Next
-	currentNew := newHead
-	count := 1
-
-	for currentOriginal != nil {
-		count++
-		newNode := &ListNode{Val: currentOriginal.Val}
-		currentNew.Next = newNode
-		currentNew = newNode
-		currentOriginal = currentOriginal.Next
-	}
-
-	return newHead, count
+// Rearrange reorders the linked list as specified
+func reorderList(head *ListNode) {
+	rearrange(head, head)
 }
-func getReverseList(head *ListNode) *ListNode {
+
+// // Rearrange reorders the linked list as specified
+// func rearrange(head **ListNode, last *ListNode) {
+// 	if last == nil {
+// 		return
+// 	}
+
+// 	// Recursive call
+// 	rearrange(head, last.Next)
+
+// 	// (*head).Next will be set to nil after rearrangement
+// 	if (*head).Next == nil {
+// 		return
+// 	}
+
+// 	// Rearrange the list until both head and last meet or next to each other
+// 	if *head != last && (*head).Next != last {
+// 		tmp := (*head).Next
+// 		(*head).Next = last
+// 		last.Next = tmp
+// 		*head = tmp
+// 	} else {
+// 		if *head != last {
+// 			*head = (*head).Next
+// 		}
+// 		(*head).Next = nil
+// 	}
+// }
+
+func rearrange(head *ListNode, last *ListNode) {
+	if last == nil {
+		return
+	}
+
+	rearrange(head, last.Next) // This modifies a copy of head, not the original head pointer
+
 	if head.Next == nil {
-		return head
+		return
 	}
 
-	temp := getReverseList(head.Next)
-
-	temp2 := head.Next
-	head.Next = head.Next.Next
-	temp2.Next = head
-
-	return temp
-
-}
-func reorderList(head *ListNode) *ListNode {
-	list, count := copyLinkedList(head)
-	reverseList := getReverseList(head)
-
-	temp := &ListNode{
-		Val: list.Val, Next: nil,
-	}
-	tempList := temp
-	list = list.Next
-	count--
-
-	alternate := true
-	head = tempList
-	for count > 0 {
-		if alternate {
-			temp = &ListNode{
-				Val: reverseList.Val, Next: nil,
-			}
-			tempList.Next = temp
-			reverseList = reverseList.Next
-			alternate = false
-		} else {
-			temp = &ListNode{
-				Val: list.Val, Next: nil,
-			}
-			tempList.Next = temp
-			list = list.Next
-			alternate = true
+	if head != last && head.Next != last {
+		tmp := head.Next
+		head.Next = last
+		last.Next = tmp
+		head = tmp // This modifies a copy of head, not the original head pointer
+	} else {
+		if head != last {
+			head = head.Next // This modifies a copy of head, not the original head pointer
 		}
-		count--
-		tempList = tempList.Next
+		head.Next = nil // This modifies a copy of head, not the original head pointer
 	}
-	tempList = nil
-	return head
 }

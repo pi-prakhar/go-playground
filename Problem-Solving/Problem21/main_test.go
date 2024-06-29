@@ -1,55 +1,53 @@
 package main
 
 import (
+	"reflect"
 	"testing"
 )
 
-func isEqual(got *ListNode, want *ListNode) bool {
-	if got == nil && want == nil {
-		return true
-	}
-	if got.Val != want.Val {
-		return false
+// Helper function to create a linked list from a slice of integers
+func createLinkedList(vals []int) *ListNode {
+	if len(vals) == 0 {
+		return nil
 	}
 
-	return true && isEqual(got.Next, want.Next)
-
+	head := &ListNode{Val: vals[0]}
+	current := head
+	for _, val := range vals[1:] {
+		current.Next = &ListNode{Val: val}
+		current = current.Next
+	}
+	return head
 }
 
-func Test_ReorderList(t *testing.T) {
+// Helper function to convert a linked list to a slice of integers
+func linkedListToSlice(head *ListNode) []int {
+	var result []int
+	for head != nil {
+		result = append(result, head.Val)
+		head = head.Next
+	}
+	return result
+}
+
+// Test function for reorderList using the testing library
+func TestReorderList(t *testing.T) {
 	tests := []struct {
-		testName string
-		list     *ListNode
-		want     *ListNode
+		input    []int
+		expected []int
 	}{
-		{
-			"Multiple Nodes",
-			&ListNode{1, &ListNode{2, &ListNode{3, &ListNode{4, &ListNode{5, nil}}}}},
-			&ListNode{1, &ListNode{5, &ListNode{2, &ListNode{4, &ListNode{3, nil}}}}},
-		},
-		{
-			"Two Nodes",
-			&ListNode{1, &ListNode{2, nil}},
-			&ListNode{1, &ListNode{2, nil}},
-		},
-		{
-			"One Node",
-			&ListNode{1, nil},
-			&ListNode{1, nil},
-		},
-		{
-			"No Node",
-			&ListNode{1, &ListNode{2, &ListNode{3, &ListNode{4, nil}}}},
-			&ListNode{1, &ListNode{4, &ListNode{2, &ListNode{3, nil}}}},
-		},
+		{input: []int{1, 2, 3, 4}, expected: []int{1, 4, 2, 3}},
+		{input: []int{1, 2, 3, 4, 5}, expected: []int{1, 5, 2, 4, 3}},
+		{input: []int{1}, expected: []int{1}},
 	}
 
 	for _, test := range tests {
-		t.Run(test.testName, func(t *testing.T) {
-			got := reorderList(test.list)
-			if !isEqual(got, test.want) {
-				t.Errorf("Failed %s: expected %+v, got %+v", test.testName, test.want, got)
-			}
-		})
+		head := createLinkedList(test.input)
+		reorderList(head)
+		result := linkedListToSlice(head)
+
+		if !reflect.DeepEqual(result, test.expected) {
+			t.Errorf("For input %v, expected %v, but got %v", test.input, test.expected, result)
+		}
 	}
 }
