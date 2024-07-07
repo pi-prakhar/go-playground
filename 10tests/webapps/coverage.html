@@ -55,13 +55,15 @@
 			<div id="nav">
 				<select id="files">
 				
-				<option value="file0">webapps_test/cmd/web/handlers.go (70.0%)</option>
+				<option value="file0">webapps_test/cmd/web/forms.go (100.0%)</option>
 				
-				<option value="file1">webapps_test/cmd/web/main.go (0.0%)</option>
+				<option value="file1">webapps_test/cmd/web/handlers.go (29.2%)</option>
 				
-				<option value="file2">webapps_test/cmd/web/middleware.go (95.7%)</option>
+				<option value="file2">webapps_test/cmd/web/main.go (0.0%)</option>
 				
-				<option value="file3">webapps_test/cmd/web/routes.go (100.0%)</option>
+				<option value="file3">webapps_test/cmd/web/middleware.go (95.7%)</option>
+				
+				<option value="file4">webapps_test/cmd/web/routes.go (100.0%)</option>
 				
 				</select>
 			</div>
@@ -78,7 +80,68 @@
 		<pre class="file" id="file0" style="display: none">package main
 
 import (
+        "net/url"
+        "strings"
+)
+
+type errors map[string][]string
+
+func (e errors) Get(field string) string <span class="cov8" title="1">{
+        errorSlice := e[field]
+        if len(errorSlice) == 0 </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return errorSlice[0]</span>
+}
+
+func (e errors) Add(field, message string) <span class="cov8" title="1">{
+        e[field] = append(e[field], message)
+}</span>
+
+type Form struct {
+        Data   url.Values
+        Errors errors
+}
+
+func NewForm(data url.Values) *Form <span class="cov8" title="1">{
+        return &amp;Form{
+                Data:   data,
+                Errors: map[string][]string{},
+        }
+}</span>
+
+func (f *Form) Has(field string) bool <span class="cov8" title="1">{
+        x := f.Data.Get(field)
+        return x != ""
+
+}</span>
+
+func (f *Form) Required(fields ...string) <span class="cov8" title="1">{
+        for _, field := range fields </span><span class="cov8" title="1">{
+                value := f.Data.Get(field)
+                if strings.TrimSpace(value) == "" </span><span class="cov8" title="1">{
+                        f.Errors.Add(field, "This field cannot be blank")
+                }</span>
+        }
+}
+
+func (f *Form) Check(ok bool, key, message string) <span class="cov8" title="1">{
+        if !ok </span><span class="cov8" title="1">{
+                f.Errors.Add(key, message)
+        }</span>
+}
+
+func (f *Form) Valid() bool <span class="cov8" title="1">{
+        return len(f.Errors) == 0
+}</span>
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package main
+
+import (
+        "fmt"
         "html/template"
+        "log"
         "net/http"
         "path"
 )
@@ -113,9 +176,33 @@ func (app *application) render(w http.ResponseWriter, r *http.Request, t string,
 
         <span class="cov8" title="1">return nil</span>
 }
+
+func (app *application) Login(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        err := r.ParseForm()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println(err)
+                http.Error(w, "bad request", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov0" title="0">form := NewForm(r.PostForm)
+        form.Required("email", "password")
+
+        if !form.Valid() </span><span class="cov0" title="0">{
+                fmt.Fprint(w, "failed validation")
+                return
+        }</span>
+
+        <span class="cov0" title="0">email := r.Form.Get("email")
+        password := r.Form.Get("password")
+
+        log.Println(email, password)
+
+        fmt.Fprint(w, email)</span>
+}
 </pre>
 		
-		<pre class="file" id="file1" style="display: none">package main
+		<pre class="file" id="file2" style="display: none">package main
 
 import (
         "log"
@@ -143,7 +230,7 @@ func main() <span class="cov0" title="0">{
 }
 </pre>
 		
-		<pre class="file" id="file2" style="display: none">package main
+		<pre class="file" id="file3" style="display: none">package main
 
 import (
         "context"
@@ -162,7 +249,7 @@ func (app *application) ipFromContext(ctx context.Context) string <span class="c
 
 func (app *application) addIPToContext(next http.Handler) http.Handler <span class="cov8" title="1">{
         return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
-                var ctx = context.Background()
+                ctx := context.Background()
                 //get the ip (as accurately as possible)
                 ip, err := getIP(r)
                 if err != nil </span><span class="cov8" title="1">{
@@ -201,7 +288,7 @@ func getIP(r *http.Request) (string, error) <span class="cov8" title="1">{
 }
 </pre>
 		
-		<pre class="file" id="file3" style="display: none">package main
+		<pre class="file" id="file4" style="display: none">package main
 
 import (
         "net/http"
@@ -219,6 +306,7 @@ func (app *application) routes() http.Handler <span class="cov8" title="1">{
 
         // register routes
         mux.Get("/home", app.Home)
+        mux.Post("/login", app.Login)
 
         // static assets
         fileServer := http.FileServer(http.Dir("./static"))
