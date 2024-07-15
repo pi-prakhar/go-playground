@@ -1,5 +1,13 @@
 package main
 
+/**
+Problem :
+leetcode -> Climbing Stairs -> easy
+
+Tags :
+recursion -> memoization -> dynamic programming -> dp
+
+**/
 func solve(n int, dp *[]int) int {
 	if n == 1 || n == 0 {
 		(*dp)[n] = 1
