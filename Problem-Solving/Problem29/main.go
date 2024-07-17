@@ -1,5 +1,12 @@
 package main
 
+/**
+PROBLEM:
+leetcode ->Word Search ->medium
+
+TAGS:
+array, recursion, backtrack
+**/
 func exist(board [][]byte, word string) bool {
 	for col := 0; col < len(board); col++ {
 		for row := 0; row < len(board[col]); row++ {
