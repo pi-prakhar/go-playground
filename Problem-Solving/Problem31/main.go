@@ -1,5 +1,13 @@
 package main
 
+/**
+PROBLEM :
+leetcode -> House Robber -> medium
+
+TAGS:
+dynamic programming, dp, array
+
+**/
 func solve(max *int, store *map[int]int, nums []int, start int) int {
 
 	if val, ok := (*store)[start]; ok {
