@@ -5,7 +5,7 @@ PROBLEM :
 leetcode -> House Robber -> medium
 
 TAGS:
-dynamic programming, dp, array
+dynamic programming, dp, array, notbest
 
 **/
 func solve(max *int, store *map[int]int, nums []int, start int) int {
