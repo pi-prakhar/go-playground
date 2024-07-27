@@ -1,14 +1,15 @@
 package main
 
-/**
-PROBLEM :
-leetcode -> House Robber 2-> medium
+// /**
+// PROBLEM :
+// leetcode -> House Robber 2-> medium
 
-TAGS:
-dynamic programming, dp, array
+// TAGS:
+// dynamic programming, dp, array , notbest
 
-**/
-func solve(max *int, store *map[int]int, nums []int, start int, skip bool) int {
+// **/
+
+func solve(max *int, store *map[int]int, nums []int, start int) int {
 
 	if val, ok := (*store)[start]; ok {
 		return val
@@ -16,10 +17,9 @@ func solve(max *int, store *map[int]int, nums []int, start int, skip bool) int {
 	sum := 0
 	tempmax := 0
 	for index := start; index < len(nums); index++ {
-		if skip && index == len(nums)-1 {
-			break
-		} else if index+2 < len(nums) {
-			sum = nums[start] + solve(max, store, nums, index+2, skip)
+
+		if index+2 < len(nums) {
+			sum = nums[start] + solve(max, store, nums, index+2)
 		} else {
 			sum = nums[start]
 		}
@@ -39,8 +39,11 @@ func solve(max *int, store *map[int]int, nums []int, start int, skip bool) int {
 func rob(nums []int) int {
 	max := 0
 	dp := make(map[int]int)
-	solve(&max, &dp, nums, 0, true)
-	solve(&max, &dp, nums, 1, false)
-	solve(&max, &dp, nums, 2, false)
+	dp2 := make(map[int]int)
+	newNums := nums[0 : len(nums)-1]
+	solve(&max, &dp, newNums, 0)
+	solve(&max, &dp2, nums, 1)
+	solve(&max, &dp2, nums, 2)
+
 	return max
 }
