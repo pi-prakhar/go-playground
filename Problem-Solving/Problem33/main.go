@@ -1,5 +1,13 @@
 package main
 
+/**
+PROBLEM:
+leetcode -> Simplify Path -> medium
+
+TAGS:
+stack, string
+**/
+
 type stack []string
 
 func (st *stack) push(val string) {
@@ -37,7 +45,6 @@ func constructNewPath(st *stack) string {
 }
 
 func simplifyPath(path string) string {
-
 	var st stack
 	var i int = 0
 	var temp string
