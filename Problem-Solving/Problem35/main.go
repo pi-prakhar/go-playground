@@ -1,5 +1,13 @@
 package main
 
+/**
+PROBLEM:
+leetcode -> Reverse Words in a String -> medium
+
+TAGS:
+string, arrays
+**/
+
 func reverseWords(s string) string {
 	start := 0
 	length := len(s)
