@@ -1,5 +1,13 @@
 package main
 
+/**
+PROBLEM:
+leetcode -> Remove Outermost Parentheses -> easy
+
+TAGS:
+string, stack
+**/
+
 func removeOuterParentheses(s string) string {
 	var st int = 0
 	start := 0
