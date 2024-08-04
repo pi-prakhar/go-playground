@@ -5,6 +5,15 @@ import (
 	"strconv"
 )
 
+/**
+PROBLEM:
+leetcode -> countAndSay -> medium
+
+TAGS:
+string
+
+**/
+
 func countAndSay(n int) string {
 	if strconv.Itoa(n) == "1" {
 		return "1"
