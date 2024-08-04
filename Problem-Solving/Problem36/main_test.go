@@ -56,3 +56,15 @@ func TestGetRLEOfNumber(t *testing.T) {
 		})
 	}
 }
+
+func BenchmarkCountAndSay(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		countAndSay(30)
+	}
+}
+
+func BenchmarkCountAndSayOptimized(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		countAndSayOptimized(30)
+	}
+}
