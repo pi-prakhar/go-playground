@@ -2,6 +2,13 @@ package main
 
 import "strconv"
 
+/**
+PROBLEM :
+leetcode -> Compare Version Numbers -> medium
+
+TAGS :
+strings , two pointer , not best
+**/
 func compareVersion(version1 string, version2 string) int {
 	index1 := 0
 	index2 := 0
