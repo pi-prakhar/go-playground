@@ -1,5 +1,12 @@
 package main
 
+/**
+PROBLEM:
+leetcode -> Next Permutation -> medium
+
+TAGS:
+strings, two pointer
+**/
 func nextPermutation(nums []int) {
 	length := len(nums)
 	startBehind := -1
@@ -15,7 +22,6 @@ func nextPermutation(nums []int) {
 	}
 
 	reverseNums(&nums, &startBehind, &length)
-	return
 }
 
 func reverseNums(nums *[]int, start *int, end *int) {
