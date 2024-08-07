@@ -1,5 +1,13 @@
 package main
 
+/**
+PROBLEM:
+leetcode -> Longest Palindromic Substring -> medium
+
+TAGS:
+strings, two pointer
+**/
+
 func longestPalindrome(s string) string {
 	if len(s) == 1 {
 		return s
