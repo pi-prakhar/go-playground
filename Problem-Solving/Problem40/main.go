@@ -1,3 +1,13 @@
+package main
+
+/**
+PROBLEM:
+leetcode -> Rotate Image -> medium
+
+TAGS:
+math, matrix, arrays
+**/
+
 func rotate(matrix [][]int) {
 	n := len(matrix)
 	tempMatrix := make([][]int, n)
