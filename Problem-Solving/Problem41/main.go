@@ -1,5 +1,12 @@
 package main
 
+/**
+PROBLEM:
+leetcode -> maxsubarray -> medium
+
+TAGS:
+array
+**/
 func maxSubArray(nums []int) int {
 	tempSum := nums[0]
 	maxSum := nums[0]
