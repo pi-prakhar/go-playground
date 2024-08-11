@@ -2,6 +2,14 @@ package main
 
 import "sort"
 
+/**
+PROBLEM:
+leetcode -> Merge Intervals -> medium
+
+Tags:
+array, sort
+**/
+
 func merge(intervals [][]int) [][]int {
 	sort.Slice(intervals, func(i, j int) bool {
 		return intervals[i][0] < intervals[j][0]
