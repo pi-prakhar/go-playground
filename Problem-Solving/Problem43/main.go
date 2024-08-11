@@ -1,5 +1,12 @@
 package main
 
+/**
+PROBLEM:
+leetcode -> medium -> Set matrix zeroes
+
+TAGS:
+matrix , arrays
+**/
 func setZeroes(matrix [][]int) {
 	colLen := len(matrix[0])
 	var rows []int
