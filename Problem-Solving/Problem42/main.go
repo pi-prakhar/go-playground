@@ -1,5 +1,12 @@
 package main
 
+/**
+PROBLEM :
+leetcode -> medium -> sort colors
+
+TAGS:
+arrays, map
+**/
 func sortColors(nums []int) {
 	freq := make(map[int]int)
 	color, index := 0, 0
