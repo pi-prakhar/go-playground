@@ -1,5 +1,12 @@
 package main
 
+/**
+PROBLEM:
+leetcode -> Merge Sorted Array -> medium
+
+TAGS:
+array, two pointe
+**/
 func merge(nums1 []int, m int, nums2 []int, n int) {
 	if m == 0 {
 		pointer3 := m + n - 1
