@@ -1,5 +1,12 @@
 package main
 
+/**
+PROBLEM:
+leetcode -> Find the Index of the First Occurrence in a String -> easy
+
+TAGS:
+string
+**/
 func strStr(haystack string, needle string) int {
 	for index, _ := range haystack {
 		if haystack[index] == needle[0] && check(haystack, needle, index) {
