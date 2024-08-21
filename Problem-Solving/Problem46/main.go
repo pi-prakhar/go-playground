@@ -8,21 +8,26 @@ TAGS:
 string
 **/
 func strStr(haystack string, needle string) int {
-	for index, _ := range haystack {
-		if haystack[index] == needle[0] && check(haystack, needle, index) {
-			return index
+	if len(needle) == 0 {
+		return 0
+	}
+
+	for i := 0; i <= len(haystack)-len(needle); i++ {
+		if haystack[i] == needle[0] {
+			if checkMatch(haystack, needle, i) {
+				return i
+			}
 		}
 	}
 
 	return -1
 }
 
-func check(haystack string, needle string, index int) bool {
-	for i, _ := range needle {
-		if index >= len(haystack) || needle[i] != haystack[index] {
+func checkMatch(haystack, needle string, index int) bool {
+	for i := 1; i < len(needle); i++ {
+		if haystack[index+i] != needle[i] {
 			return false
 		}
-		index++
 	}
 	return true
 }
