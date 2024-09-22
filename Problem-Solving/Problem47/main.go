@@ -6,6 +6,14 @@ import (
 	"strings"
 )
 
+/**
+Problem :
+leetcode -> medium -> Largest Number
+
+Tags :
+sorting, array, string
+**/
+
 func largestNumber(nums []int) string {
 	numsStr := make([]string, len(nums))
 
