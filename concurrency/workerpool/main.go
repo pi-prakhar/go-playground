@@ -17,7 +17,6 @@ func taskHandler(wg *sync.WaitGroup, ch <-chan int) {
 		time.Sleep(1 * time.Second)
 		fmt.Println("Processed task : ", task)
 	}
-
 }
 
 func main() {

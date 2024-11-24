@@ -100,7 +100,6 @@ func philosopherEats(philosopher Philosopher, forks map[int]*sync.Mutex, wg *syn
 			//pick left fork
 			forks[philosopher.leftFork].Lock()
 			fmt.Printf("%s has picked left fork{%d} at Dinning Table \n", philosopher.name, philosopher.leftFork)
-
 		}
 
 		//eat
