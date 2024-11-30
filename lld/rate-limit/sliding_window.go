@@ -9,7 +9,7 @@ import (
 type SlidingWindow struct {
 	windowLength time.Duration
 	maxTokens    int
-	tokens       *[]time.Time
+	tokens       []time.Time
 	mu           sync.Mutex
 }
 
@@ -18,7 +18,7 @@ func NewSlidingWindow(windowLength time.Duration, maxTokens int) *SlidingWindow 
 	sw := SlidingWindow{
 		windowLength: windowLength,
 		maxTokens:    maxTokens,
-		tokens:       &tokens,
+		tokens:       tokens,
 	}
 	return &sw
 }
@@ -27,24 +27,31 @@ func (sw *SlidingWindow) UseToken() (int, bool) {
 	now := time.Now()
 	lastAcceptedTime := now.Add(-sw.windowLength)
 
-	var newIndex int
-	fmt.Println("last : ", *sw.tokens)
+	var newIndex int = 0
 
 	// get accepted tokens only
-	for index, token := range *sw.tokens {
-		if !token.After(lastAcceptedTime) {
+	for index, token := range sw.tokens {
+		if token.After(lastAcceptedTime) {
 			newIndex = index
+			break
 		}
 	}
 
 	// update the tokens array
-	(*sw.tokens) = (*sw.tokens)[:newIndex]
+	sw.tokens = sw.tokens[newIndex:]
+	//printTokens(sw.tokens)
 
 	// check to see if we can use a new token
-	if len(*sw.tokens) <= sw.maxTokens {
-		(*sw.tokens) = append(*sw.tokens, now)
-		return len(*sw.tokens), true
+	if len(sw.tokens) < sw.maxTokens {
+		sw.tokens = append(sw.tokens, now)
+		return sw.maxTokens - len(sw.tokens), true
 	} else {
-		return len(*sw.tokens), false
+		return sw.maxTokens - len(sw.tokens), false
+	}
+}
+
+func printTokens(tokens []time.Time) {
+	for _, token := range tokens {
+		fmt.Print(token.Format("05.000"), " ")
 	}
 }

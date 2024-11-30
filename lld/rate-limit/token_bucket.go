@@ -27,7 +27,7 @@ func (tb *TokenBucket) refillTicker() {
 	}
 }
 
-func (tb *TokenBucket) Usetokens(tokens int) (int, bool) {
+func (tb *TokenBucket) UseToken(tokens int) (int, bool) {
 	tb.mu.Lock()
 	defer tb.mu.Unlock()
 	if tb.currTokens > 0 {
