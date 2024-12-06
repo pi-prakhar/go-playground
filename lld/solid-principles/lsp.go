@@ -10,6 +10,9 @@ In Go:
 
 1) Ensure that any struct implementing an interface can be used interchangeably wherever the interface is used.
 2) Stick to the expected behavior defined by the interface.
+
+
+exmple if there is an interface Bird with method fly if implemented by Peigon it is okay but when implemented by Penguin it breaks the principle
 */
 
 type Shape interface {
