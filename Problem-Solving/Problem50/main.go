@@ -1,5 +1,13 @@
 package main
 
+/*
+PROBLEM:
+42. Trapping Rain Water, leetcode, Hard
+
+TAGS:
+double pointer, array, DP
+*/
+
 func trap(height []int) int {
 	length := len(height)
 	if length < 3 {
