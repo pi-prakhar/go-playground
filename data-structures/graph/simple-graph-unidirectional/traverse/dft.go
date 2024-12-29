@@ -12,11 +12,13 @@ func DepthFirstTraverse(graph map[int][]int, source int) {
 
 	var stack helpers.Stack[int]
 	stack.Push(source)
+	visited := make(map[int]struct{})
 
 	for !stack.IsEmpty() {
 		element, exists := stack.Pop()
-		if exists {
+		if _, ok := visited[element]; !ok && exists {
 			fmt.Println(element)
+			visited[element] = struct{}{}
 			var neighbours []int = graph[element]
 			for _, neighbour := range neighbours {
 				stack.Push(neighbour)

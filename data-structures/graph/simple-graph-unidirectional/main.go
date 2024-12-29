@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"simple-graph-unidirectional/traverse"
 )
 
@@ -14,5 +15,8 @@ var Graph map[int][]int = map[int][]int{
 }
 
 func main() {
+	fmt.Println("Depth First Traversal")
 	traverse.DepthFirstTraverse(Graph, 1)
+	fmt.Println("Breadth First Traversal")
+	traverse.BreadthFirstTraverse(1, Graph)
 }
