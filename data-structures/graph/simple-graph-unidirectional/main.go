@@ -19,4 +19,8 @@ func main() {
 	traverse.DepthFirstTraverse(Graph, 1)
 	fmt.Println("Breadth First Traversal")
 	traverse.BreadthFirstTraverse(1, Graph)
+	fmt.Println("Check has Path 1 -> 6",traverse.HasPathDFT(Graph, 1, 6))
+	fmt.Println("Check has Path 6 -> 5",traverse.HasPathDFT(Graph, 6, 5))
+	fmt.Println("Check has Path 4 -> 5",traverse.HasPathDFT(Graph, 4, 5))
+	fmt.Println("Check has Path 1 -> 5",traverse.HasPathDFT(Graph, 1, 5)) 
 }
